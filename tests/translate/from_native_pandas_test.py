@@ -3,7 +3,7 @@ from typing import Any
 import pandas as pd
 import pytest
 
-import narwhals as nw
+import narwhals.stable.v1_0 as nw
 
 
 def test_dupes() -> None:

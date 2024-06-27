@@ -15,6 +15,8 @@ Seamlessly support both, without depending on either!
 - ✅ **100% branch coverage**, tested against pandas and Polars nightly builds
 - ✅ **Negligible overhead**, see [overhead](https://narwhals-dev.github.io/narwhals/overhead/)
 - ✅ Let your IDE help you thanks to **full static typing**, see [typing](https://narwhals-dev.github.io/narwhals/typing/)
+- ✅ **Perfect backwards compatibility policy**,
+  see [backwards compatibility](https://narwhals-dev.github.io/narwhals/backcompat/) for how to opt-in
 
 ## Who's this for?
 
