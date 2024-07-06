@@ -28,7 +28,7 @@ Seamlessly support all, without depending on any!
 - ✅ **Negligible overhead**, see [overhead](https://narwhals-dev.github.io/narwhals/overhead/)
 - ✅ Let your IDE help you thanks to **full static typing**, see [typing](https://narwhals-dev.github.io/narwhals/typing/)
 - ✅ **Perfect backwards compatibility policy**,
-  see [backwards compatibility](https://narwhals-dev.github.io/narwhals/backcompat/) for how to opt-in
+  see [stable api](https://narwhals-dev.github.io/narwhals/backcompat/) for how to opt-in
 
 ## Used by / integrates with
 
