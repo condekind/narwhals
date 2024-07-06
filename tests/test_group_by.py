@@ -6,7 +6,7 @@ import pandas as pd
 import polars as pl
 import pytest
 
-import narwhals.stable.v1_0 as nw
+import narwhals.stable.v1 as nw
 from tests.utils import compare_dicts
 
 data = {"a": [1, 1, 3], "b": [4, 4, 6], "c": [7.0, 8, 9]}

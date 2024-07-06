@@ -4,15 +4,15 @@ import polars as pl
 import pytest
 
 import narwhals as nw
-import narwhals.stable.v1_0 as nw_v1_0
+import narwhals.stable.v1 as nw_v1
 from tests.utils import compare_dicts
 
 
 def test_renamed_taxicab_norm(constructor: Any) -> None:
     # Suppose we need to rename `_taxicab_norm` to `_l1_norm`.
-    # We need `narwhals.stable.v1_0` to stay stable. So, we
+    # We need `narwhals.stable.v1` to stay stable. So, we
     # make the change in `narwhals`, and then add the new method
-    # to the subclass of `Expr` in `narwhals.stable.v1_0`.
+    # to the subclass of `Expr` in `narwhals.stable.v1`.
     # Here, we check that anyone who wrote code using the old
     # API will still be able to use it, without the main namespace
     # getting cluttered by the new name.
@@ -25,20 +25,20 @@ def test_renamed_taxicab_norm(constructor: Any) -> None:
         # mypy complains here...
         result = df.with_columns(b=nw.col("a")._l1_norm())  # type: ignore[attr-defined]
 
-    df = nw_v1_0.from_native(constructor({"a": [1, 2, 3, -4, 5]}))
+    df = nw_v1.from_native(constructor({"a": [1, 2, 3, -4, 5]}))
     # The newer `_taxicab_norm` can still work in the old API, no issue.
     # It's new, so it couldn't be backwards-incompatible.
-    result = df.with_columns(b=nw_v1_0.col("a")._taxicab_norm())
+    result = df.with_columns(b=nw_v1.col("a")._taxicab_norm())
     expected = {"a": [1, 2, 3, -4, 5], "b": [15] * 5}
     compare_dicts(result, expected)
 
     # ...but doesn't complain here!
-    result = df.with_columns(b=nw_v1_0.col("a")._l1_norm())
+    result = df.with_columns(b=nw_v1.col("a")._l1_norm())
     compare_dicts(result, expected)
 
 
 def test_stable_api_completeness() -> None:
-    v_1_api = nw_v1_0.__all__
+    v_1_api = nw_v1.__all__
     main_namespace_api = nw.__all__
     extra = set(v_1_api).difference(main_namespace_api)
     assert not extra
@@ -52,34 +52,34 @@ def test_stable_api_docstrings() -> None:
         if getattr(nw, item).__doc__ is None:
             continue
         assert (
-            getattr(nw_v1_0, item).__doc__.replace(
-                "import narwhals.stable.v1_0 as nw", "import narwhals as nw"
+            getattr(nw_v1, item).__doc__.replace(
+                "import narwhals.stable.v1 as nw", "import narwhals as nw"
             )
             == getattr(nw, item).__doc__
         )
         assert (
             getattr(nw, item).__doc__.replace(
-                "import narwhals as nw", "import narwhals.stable.v1_0 as nw"
+                "import narwhals as nw", "import narwhals.stable.v1 as nw"
             )
-            == getattr(nw_v1_0, item).__doc__
+            == getattr(nw_v1, item).__doc__
         )
 
 
 def test_dataframe_docstrings() -> None:
-    stable_df = nw_v1_0.from_native(pl.DataFrame())
+    stable_df = nw_v1.from_native(pl.DataFrame())
     df = nw.from_native(pl.DataFrame())
     api = [i for i in df.__dir__() if not i.startswith("_")]
     for item in api:
         assert (
             getattr(stable_df, item).__doc__.replace(
-                "import narwhals.stable.v1_0 as nw", "import narwhals as nw"
+                "import narwhals.stable.v1 as nw", "import narwhals as nw"
             )
             == getattr(df, item).__doc__
         )
 
 
 def test_lazyframe_docstrings() -> None:
-    stable_df = nw_v1_0.from_native(pl.LazyFrame())
+    stable_df = nw_v1.from_native(pl.LazyFrame())
     df = nw.from_native(pl.LazyFrame())
     api = [i for i in df.__dir__() if not i.startswith("_")]
     for item in api:
@@ -88,14 +88,14 @@ def test_lazyframe_docstrings() -> None:
             continue
         assert (
             getattr(stable_df, item).__doc__.replace(
-                "import narwhals.stable.v1_0 as nw", "import narwhals as nw"
+                "import narwhals.stable.v1 as nw", "import narwhals as nw"
             )
             == getattr(df, item).__doc__
         )
 
 
 def test_series_docstrings() -> None:
-    stable_df = nw_v1_0.from_native(pl.Series(), series_only=True)
+    stable_df = nw_v1.from_native(pl.Series(), series_only=True)
     df = nw.from_native(pl.Series(), series_only=True)
     api = [i for i in df.__dir__() if not i.startswith("_")]
     for item in api:
@@ -103,7 +103,7 @@ def test_series_docstrings() -> None:
             continue
         assert (
             getattr(stable_df, item).__doc__.replace(
-                "import narwhals.stable.v1_0 as nw", "import narwhals as nw"
+                "import narwhals.stable.v1 as nw", "import narwhals as nw"
             )
             == getattr(df, item).__doc__
         )

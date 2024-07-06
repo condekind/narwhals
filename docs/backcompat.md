@@ -30,7 +30,7 @@ Narwhals offers a `stable` namespace, which allows you to write your code once a
 it. That is to say, if you write your code like this:
 
 ```python
-import narwhals.stable.v1_0 as nw
+import narwhals.stable.v1 as nw
 from narwhals.typing import FrameT
 
 @nw.narwhalify
@@ -39,13 +39,13 @@ def func(df: FrameT) -> FrameT:
 ```
 
 then we, in Narwhals, promise that your code will keep working, even in newer versions of Polars
-after they have renamed their method, so long as you used `stable.v1_0`. If you used
+after they have renamed their method, so long as you used `stable.v1`. If you used
 `stable.v2_0`, then the method would be called `cumulative_sum` instead.
 
-## `import narwhals as nw` or `import narwhals.stable.v1_0 as nw`?
+## `import narwhals as nw` or `import narwhals.stable.v1 as nw`?
 
 Which should you use? In general we recommend:
 
 - When prototyping, use `import narwhals as nw`, so you iterate quickly.
 - Once you're happy with what you've got and what to release something production-ready and stable,
-  when switch out your `import narwhals as nw` usage for `import narwhals.stable.v1_0 as nw`.
+  when switch out your `import narwhals as nw` usage for `import narwhals.stable.v1 as nw`.

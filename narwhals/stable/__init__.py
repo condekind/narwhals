@@ -1,3 +1,3 @@
-from narwhals.stable import v1_0
+from narwhals.stable import v1
 
-__all__ = ["v1_0"]
+__all__ = ["v1"]

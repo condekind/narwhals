@@ -1,6 +1,6 @@
 from typing import Any
 
-import narwhals.stable.v1_0 as nw
+import narwhals.stable.v1 as nw
 
 
 def test_expr_sample(constructor: Any) -> None:

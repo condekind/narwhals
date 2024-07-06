@@ -13,7 +13,7 @@ import pyarrow as pa
 import pytest
 from hypothesis import given
 
-import narwhals.stable.v1_0 as nw
+import narwhals.stable.v1 as nw
 from narwhals.utils import parse_version
 from tests.utils import compare_dicts
 from tests.utils import is_windows

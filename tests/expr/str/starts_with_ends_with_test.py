@@ -6,7 +6,7 @@ import pandas as pd
 import polars as pl
 import pytest
 
-import narwhals.stable.v1_0 as nw
+import narwhals.stable.v1 as nw
 
 # Don't move this into typechecking block, for coverage
 # purposes

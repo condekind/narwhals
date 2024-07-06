@@ -90,7 +90,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
 
             >>> import pandas as pd
             >>> import polars as pl
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> df = {"foo": [1, 2, 3], "bar": [6.0, 7.0, 8.0], "ham": ["a", "b", "c"]}
             >>> df_pd = pd.DataFrame(df)
             >>> df_pl = pl.DataFrame(df)
@@ -134,7 +134,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
         Examples:
             >>> import pandas as pd
             >>> import polars as pl
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> df = {
             ...     "A": [1, 2, 3, 4, 5],
             ...     "fruits": ["banana", "banana", "apple", "apple", "banana"],
@@ -168,7 +168,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
         Get a mask of all duplicated rows in this DataFrame.
 
         Examples:
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> import pandas as pd
             >>> import polars as pl
             >>> df_pd = pd.DataFrame(
@@ -217,7 +217,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
         Get a mask of all unique rows in this DataFrame.
 
         Examples:
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> import pandas as pd
             >>> import polars as pl
             >>> df_pd = pd.DataFrame(
@@ -329,7 +329,7 @@ class Series(NwSeries):
         Examples:
             >>> import pandas as pd
             >>> import polars as pl
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> s = [1, 2, 3]
             >>> s_pd = pd.Series(s, name="a")
             >>> s_pl = pl.Series("a", s)
@@ -373,7 +373,7 @@ class Series(NwSeries):
             parallel: Execute the computation in parallel. Unused for pandas-like APIs.
 
         Examples:
-            >>> import narwhals.stable.v1_0 as nw
+            >>> import narwhals.stable.v1 as nw
             >>> import pandas as pd
             >>> import polars as pl
             >>> s_pd = pd.Series([1, 1, 2, 3, 2], name="s")
@@ -637,7 +637,7 @@ def narwhalify(
     Instead of writing
 
     ```python
-    import narwhals.stable.v1_0 as nw
+    import narwhals.stable.v1 as nw
 
 
     def func(df_any):
@@ -649,7 +649,7 @@ def narwhalify(
     you can just write
 
     ```python
-    import narwhals.stable.v1_0 as nw
+    import narwhals.stable.v1 as nw
 
 
     @nw.narwhalify
@@ -730,7 +730,7 @@ def all() -> Expr:
     Examples:
         >>> import polars as pl
         >>> import pandas as pd
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
         >>> df_pl = pl.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})
 
@@ -772,7 +772,7 @@ def col(*names: str | Iterable[str]) -> Expr:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pl = pl.DataFrame({"a": [1, 2], "b": [3, 4]})
         >>> df_pd = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
 
@@ -809,7 +809,7 @@ def len() -> Expr:
     Examples:
         >>> import polars as pl
         >>> import pandas as pd
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2], "b": [5, 10]})
         >>> df_pl = pl.DataFrame({"a": [1, 2], "b": [5, 10]})
 
@@ -848,7 +848,7 @@ def lit(value: Any, dtype: DType | None = None) -> Expr:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pl = pl.DataFrame({"a": [1, 2]})
         >>> df_pd = pd.DataFrame({"a": [1, 2]})
 
@@ -892,7 +892,7 @@ def min(*columns: str) -> Expr:
     Examples:
         >>> import polars as pl
         >>> import pandas as pd
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2], "b": [5, 10]})
         >>> df_pl = pl.DataFrame({"a": [1, 2], "b": [5, 10]})
 
@@ -933,7 +933,7 @@ def max(*columns: str) -> Expr:
     Examples:
         >>> import polars as pl
         >>> import pandas as pd
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2], "b": [5, 10]})
         >>> df_pl = pl.DataFrame({"a": [1, 2], "b": [5, 10]})
 
@@ -974,7 +974,7 @@ def mean(*columns: str) -> Expr:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pl = pl.DataFrame({"a": [1, 8, 3]})
         >>> df_pd = pd.DataFrame({"a": [1, 8, 3]})
 
@@ -1016,7 +1016,7 @@ def sum(*columns: str) -> Expr:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pl = pl.DataFrame({"a": [1, 2]})
         >>> df_pd = pd.DataFrame({"a": [1, 2]})
 
@@ -1054,7 +1054,7 @@ def sum_horizontal(*exprs: IntoExpr | Iterable[IntoExpr]) -> Expr:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pl = pl.DataFrame({"a": [1, 2, 3], "b": [5, 10, 15]})
         >>> df_pd = pd.DataFrame({"a": [1, 2, 3], "b": [5, 10, 15]})
 
@@ -1104,7 +1104,7 @@ def is_ordered_categorical(series: Series) -> bool:
       - Categoricals are ordered if `dtype.type.ordered == True`.
 
     Examples:
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> import pandas as pd
         >>> import polars as pl
         >>> data = ["x", "y"]
@@ -1142,7 +1142,7 @@ def maybe_align_index(lhs: T, rhs: Series | DataFrame[Any] | LazyFrame[Any]) -> 
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2]}, index=[3, 4])
         >>> s_pd = pd.Series([6, 7], index=[4, 3])
         >>> df = nw.from_native(df_pd)
@@ -1166,7 +1166,7 @@ def maybe_convert_dtypes(df: T, *args: bool, **kwargs: bool | str) -> T:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> import numpy as np
         >>> df_pd = pd.DataFrame(
         ...     {
@@ -1197,7 +1197,7 @@ def maybe_set_index(df: T, column_names: str | list[str]) -> T:
     Examples:
         >>> import pandas as pd
         >>> import polars as pl
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df_pd = pd.DataFrame({"a": [1, 2], "b": [4, 5]})
         >>> df = nw.from_native(df_pd)
         >>> nw.to_native(nw.maybe_set_index(df, "b"))  # doctest: +NORMALIZE_WHITESPACE
@@ -1216,7 +1216,7 @@ def get_native_namespace(obj: Any) -> Any:
     Examples:
         >>> import polars as pl
         >>> import pandas as pd
-        >>> import narwhals.stable.v1_0 as nw
+        >>> import narwhals.stable.v1 as nw
         >>> df = nw.from_native(pd.DataFrame({"a": [1, 2, 3]}))
         >>> nw.get_native_namespace(df)
         <module 'pandas'...>
