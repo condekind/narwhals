@@ -1,5 +1,8 @@
 # Perfect backwards compatibility policy
 
+**TL;DR**: if you write your code using `import narwhals.stable.v1 as nw`, then we promise to
+never (intentionally) break your code.
+
 Ever upgraded a package, only to find that it breaks all your tests because of an intentional
 API change? Did you end up having to litter your code with statements such as the following?
 
@@ -39,8 +42,10 @@ def func(df: FrameT) -> FrameT:
 ```
 
 then we, in Narwhals, promise that your code will keep working, even in newer versions of Polars
-after they have renamed their method, so long as you used `stable.v1`. If you used
-`stable.v2_0`, then the method would be called `cumulative_sum` instead.
+after they have renamed their method. If you used
+`narwhals.stable.v2`, then the method would be called `cumulative_sum` instead, and there may
+be other breaking changes - but so long as your code uses `narwhals.stable.v1`, those breaking
+changes won't affect you.
 
 ## `import narwhals as nw` or `import narwhals.stable.v1 as nw`?
 
@@ -49,3 +54,18 @@ Which should you use? In general we recommend:
 - When prototyping, use `import narwhals as nw`, so you iterate quickly.
 - Once you're happy with what you've got and what to release something production-ready and stable,
   when switch out your `import narwhals as nw` usage for `import narwhals.stable.v1 as nw`.
+
+## Exceptions
+
+Are we really promising perfect backwards compatibility in all cases, without exceptions? Not quite.
+There are some exceptions, which we'll now list. But we'll never intentionally break your code.
+Anything currently in `narwhals.stable.v1` will not be changed or removed in future Narwhals versions.
+
+Here are exceptions to our backwards compatibility policy:
+
+- unambiguous bugs. If a function contains what is unambiguously a bug, then we'll fix it, without
+  considering that to be a breaking change.
+- radical changes in backends. Suppose that Polars was to do something really radical, like remove
+  expressions, or pandas were to remove support for categorical data. At that point, we might
+  need to rethink Narwhals. However, we expect such radical changes to be exceedingly unlikely.
+- type hints, though we aim to keep these stable anyway.
