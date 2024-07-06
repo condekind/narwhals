@@ -54,7 +54,6 @@ if TYPE_CHECKING:
     from narwhals.typing import IntoExpr
 
 T = TypeVar("T")
-# NarwhalsObjectT = TypeVar("NarwhalsObjectT", NwDataFrame, NwLazyFrame, NwSeries, NwExpr)
 
 
 class DataFrame(NwDataFrame[IntoDataFrameT]):
@@ -161,7 +160,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
         """
         if as_series:
             return {key: _stableify(value) for key, value in super().to_dict().items()}
-        return super().to_dict(as_series=False)  # todo this should fail tests!
+        return super().to_dict(as_series=False)
 
     def is_duplicated(self: Self) -> Series:
         r"""

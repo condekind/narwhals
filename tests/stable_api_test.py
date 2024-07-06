@@ -9,7 +9,7 @@ from tests.utils import compare_dicts
 
 
 def test_renamed_taxicab_norm(constructor: Any) -> None:
-    # Suppose we need to rename `_taxicab_norm` to `_l1_norm`.
+    # Suppose we need to rename `_l1_norm` to `_taxicab_norm`.
     # We need `narwhals.stable.v1` to stay stable. So, we
     # make the change in `narwhals`, and then add the new method
     # to the subclass of `Expr` in `narwhals.stable.v1`.
@@ -22,7 +22,6 @@ def test_renamed_taxicab_norm(constructor: Any) -> None:
     compare_dicts(result, expected)
 
     with pytest.raises(AttributeError):
-        # mypy complains here...
         result = df.with_columns(b=nw.col("a")._l1_norm())  # type: ignore[attr-defined]
 
     df = nw_v1.from_native(constructor({"a": [1, 2, 3, -4, 5]}))
@@ -32,7 +31,7 @@ def test_renamed_taxicab_norm(constructor: Any) -> None:
     expected = {"a": [1, 2, 3, -4, 5], "b": [15] * 5}
     compare_dicts(result, expected)
 
-    # ...but doesn't complain here!
+    # The older `_l1_norm` still works in the stable api
     result = df.with_columns(b=nw_v1.col("a")._l1_norm())
     compare_dicts(result, expected)
 
