@@ -70,8 +70,6 @@ def test_dataframe_docstrings() -> None:
     df = nw.from_native(pl.DataFrame())
     api = [i for i in df.__dir__() if not i.startswith("_")]
     for item in api:
-        if getattr(df, item).__doc__ is None:
-            continue
         assert (
             getattr(stable_df, item).__doc__.replace(
                 "import narwhals.stable.v1_0 as nw", "import narwhals as nw"
@@ -87,8 +85,6 @@ def test_lazyframe_docstrings() -> None:
     for item in api:
         if item in ("schema", "columns"):
             # to avoid performance warning
-            continue
-        if getattr(df, item).__doc__ is None:
             continue
         assert (
             getattr(stable_df, item).__doc__.replace(
