@@ -77,7 +77,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
     def __getitem__(self, item: slice) -> Self: ...
 
     def __getitem__(self, item: Any) -> Any:
-        return stableify(super().__getitem__(item))
+        return _stableify(super().__getitem__(item))
 
     def lazy(self) -> LazyFrame[Any]:
         """
@@ -111,7 +111,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
             >>> func(df_pl)
             <LazyFrame ...>
         """
-        return stableify(super().lazy())  # type: ignore[no-any-return]
+        return _stableify(super().lazy())  # type: ignore[no-any-return]
 
     # Not sure what mypy is complaining about, probably some fancy
     # thing that I need to understand category theory for
@@ -160,7 +160,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
             {'A': [1, 2, 3, 4, 5], 'fruits': ['banana', 'banana', 'apple', 'apple', 'banana'], 'B': [5, 4, 3, 2, 1], 'cars': ['beetle', 'audi', 'beetle', 'beetle', 'beetle'], 'optional': [28, 300, None, 2, -30]}
         """
         if as_series:
-            return {key: stableify(value) for key, value in super().to_dict().items()}
+            return {key: _stableify(value) for key, value in super().to_dict().items()}
         return super().to_dict(as_series=False)  # todo this should fail tests!
 
     def is_duplicated(self: Self) -> Series:
@@ -210,7 +210,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
                 true
             ]
         """
-        return stableify(super().is_duplicated())
+        return _stableify(super().is_duplicated())
 
     def is_unique(self: Self) -> Series:
         r"""
@@ -259,7 +259,7 @@ class DataFrame(NwDataFrame[IntoDataFrameT]):
                 false
             ]
         """
-        return stableify(super().is_unique())
+        return _stableify(super().is_unique())
 
 
 class LazyFrame(NwLazyFrame[IntoFrameT]):
@@ -308,7 +308,7 @@ class LazyFrame(NwLazyFrame[IntoFrameT]):
             │ c   ┆ 6   ┆ 1   │
             └─────┴─────┴─────┘
         """
-        return stableify(super().collect())  # type: ignore[no-any-return]
+        return _stableify(super().collect())  # type: ignore[no-any-return]
 
 
 class Series(NwSeries):
@@ -359,7 +359,7 @@ class Series(NwSeries):
             │ 3   │
             └─────┘
         """
-        return stableify(super().to_frame())  # type: ignore[no-any-return]
+        return _stableify(super().to_frame())  # type: ignore[no-any-return]
 
     def value_counts(
         self: Self, *, sort: bool = False, parallel: bool = False
@@ -405,7 +405,7 @@ class Series(NwSeries):
             │ 3   ┆ 1     │
             └─────┴───────┘
         """
-        return stableify(super().value_counts(sort=sort, parallel=parallel))  # type: ignore[no-any-return]
+        return _stableify(super().value_counts(sort=sort, parallel=parallel))  # type: ignore[no-any-return]
 
 
 class Expr(NwExpr):
@@ -414,18 +414,18 @@ class Expr(NwExpr):
 
 
 @overload
-def stableify(obj: NwDataFrame[IntoFrameT]) -> DataFrame[IntoFrameT]: ...
+def _stableify(obj: NwDataFrame[IntoFrameT]) -> DataFrame[IntoFrameT]: ...
 @overload
-def stableify(obj: NwLazyFrame[IntoFrameT]) -> LazyFrame[IntoFrameT]: ...
+def _stableify(obj: NwLazyFrame[IntoFrameT]) -> LazyFrame[IntoFrameT]: ...
 @overload
-def stableify(obj: NwSeries) -> Series: ...
+def _stableify(obj: NwSeries) -> Series: ...
 @overload
-def stableify(obj: NwExpr) -> Expr: ...
+def _stableify(obj: NwExpr) -> Expr: ...
 @overload
-def stableify(obj: Any) -> Any: ...
+def _stableify(obj: Any) -> Any: ...
 
 
-def stableify(
+def _stableify(
     obj: NwDataFrame[IntoFrameT] | NwLazyFrame[IntoFrameT] | NwSeries | NwExpr | Any,
 ) -> DataFrame[IntoFrameT] | LazyFrame[IntoFrameT] | Series | Expr | Any:
     if isinstance(obj, NwDataFrame):
@@ -610,7 +610,7 @@ def from_native(
         series_only=series_only,
         allow_series=allow_series,
     )
-    return stableify(result)
+    return _stableify(result)
 
 
 def narwhalify(
@@ -759,7 +759,7 @@ def all() -> Expr:
         │ 6   ┆ 12  │
         └─────┴─────┘
     """
-    return stableify(nw.all())
+    return _stableify(nw.all())
 
 
 def col(*names: str | Iterable[str]) -> Expr:
@@ -799,7 +799,7 @@ def col(*names: str | Iterable[str]) -> Expr:
         │ 8   │
         └─────┘
     """
-    return stableify(nw.col(*names))
+    return _stableify(nw.col(*names))
 
 
 def len() -> Expr:
@@ -834,7 +834,7 @@ def len() -> Expr:
         │ 2   │
         └─────┘
     """
-    return stableify(nw.len())
+    return _stableify(nw.len())
 
 
 def lit(value: Any, dtype: DType | None = None) -> Expr:
@@ -876,7 +876,7 @@ def lit(value: Any, dtype: DType | None = None) -> Expr:
         └─────┴─────┘
 
     """
-    return stableify(nw.lit(value, dtype))
+    return _stableify(nw.lit(value, dtype))
 
 
 def min(*columns: str) -> Expr:
@@ -917,7 +917,7 @@ def min(*columns: str) -> Expr:
         │ 5   │
         └─────┘
     """
-    return stableify(nw.min(*columns))
+    return _stableify(nw.min(*columns))
 
 
 def max(*columns: str) -> Expr:
@@ -958,7 +958,7 @@ def max(*columns: str) -> Expr:
         │ 2   │
         └─────┘
     """
-    return stableify(nw.max(*columns))
+    return _stableify(nw.max(*columns))
 
 
 def mean(*columns: str) -> Expr:
@@ -1000,7 +1000,7 @@ def mean(*columns: str) -> Expr:
         │ 4.0 │
         └─────┘
     """
-    return stableify(nw.mean(*columns))
+    return _stableify(nw.mean(*columns))
 
 
 def sum(*columns: str) -> Expr:
@@ -1041,7 +1041,7 @@ def sum(*columns: str) -> Expr:
         │ 3   │
         └─────┘
     """
-    return stableify(nw.sum(*columns))
+    return _stableify(nw.sum(*columns))
 
 
 def sum_horizontal(*exprs: IntoExpr | Iterable[IntoExpr]) -> Expr:
@@ -1084,7 +1084,7 @@ def sum_horizontal(*exprs: IntoExpr | Iterable[IntoExpr]) -> Expr:
         └─────┘
 
     """
-    return stableify(nw.sum_horizontal(*exprs))
+    return _stableify(nw.sum_horizontal(*exprs))
 
 
 def is_ordered_categorical(series: Series) -> bool:
